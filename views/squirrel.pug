@@ -1,0 +1,25 @@
+extends layout
+block content
+    div(class="container-fluid")
+        h1= title
+    - let results=[{squirrel_color:"grey",squirrel_breed:"Eastern Gray Squirrel",squirrel_price:6000},{squirrel_color:"red",squirrel_breed:"American Red Squirrel",squirrel_price:6500},{squirrel_color:"brown",squirrel_breed:"Fox Squirrel",squirrel_price:7000}]
+        div(class="row")
+            each form,item in results
+                div(class = "col-sm-2 bg-danger" onclick=`buy(${item})`) #{form.squirrel_color}              
+                div(class = "col-sm-2 bg-danger" onclick=`buy(${item})`) #{form.squirrel_breed}                
+                div(class = "col-sm-2 bg-danger" onclick=`buy(${item})`) #{form.squirrel_price}
+                hr
+
+    br
+    h5= 'buy'
+
+    div(class="container-fluid")
+      each squirrel,index in results
+        div(class="row", onclick=`buy(${index})`)
+          div(class="col-sm-2") <br>squirrel #{index}: #{squirrel.squirrel_color} breed:#{squirrel.squirrel_breed} price:#{squirrel.squirrel_price}
+
+    script.
+        function buy(itemNo)
+        {
+            alert(`You purchased Item ${itemNo+1}`)
+        }

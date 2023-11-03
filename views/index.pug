@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Love to Watch Movies
+
+
+  <button type="button" class="btn btn-danger">Press Me</button>
+  div#faster Increase the speed 
+  button(type="button" class="btn btn-danger" onclick="goFaster()") Go Faster
+  script. 
+    let mph = 20;
+    let change = 1;
+    function goFaster() {
+      mph = mph + change;
+      change = change + 1;
+      document.getElementById("faster").innerText = `MPH ${mph} with change ${change}`
+    }
