@@ -4,15 +4,58 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
+
+
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var squirrelRouter = require('./routes/squirrel');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
+var squirrel = require("./models/squirrel");
 
 var app = express();
 
+async function recreateDB(){
+  // Delete everything
+  await squirrel.deleteMany();
+  let instance1 = new
+  squirrel({squirrel_color:"grey",squirrel_breed:"Eastern Gray Squirrel",squirrel_price:6000});
+  let instance2 = new
+  squirrel({squirrel_color:"red",squirrel_breed:"American Red Squirrel",squirrel_price:6500});
+  let instance3 = new
+  squirrel({squirrel_color:"brown",squirrel_breed:"Fox Squirrel",squirrel_price:7000});
+  instance1.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("First object saved")
+  });
+  instance2.save( function(err,doc) {
+    if(err) return console.error(err);
+    console.log("Second object saved")
+    });
+  instance3.save( function(err,doc) {
+    if(err) return console.error(err);
+    console.log("Third object saved")
+    });
+ }
+ let reseed = true;
+ if (reseed) { recreateDB();}
+
 // view engine setup
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -43,5 +86,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
