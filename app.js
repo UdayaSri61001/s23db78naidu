@@ -5,6 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true,
+useUnifiedTopology: true});
 
 var db = mongoose.connection;
 //Bind connection to error event
@@ -13,9 +20,8 @@ db.once("open", function(){
 console.log("Connection to DB succeeded")});
 
 
-
-
 var indexRouter = require('./routes/index');
+var resourceRouter = require('./routes/resource');
 var usersRouter = require('./routes/users');
 var squirrelRouter = require('./routes/squirrel');
 var boardRouter = require('./routes/board');
@@ -33,28 +39,27 @@ async function recreateDB(){
   squirrel({squirrel_color:"red",squirrel_breed:"American Red Squirrel",squirrel_price:6500});
   let instance3 = new
   squirrel({squirrel_color:"brown",squirrel_breed:"Fox Squirrel",squirrel_price:7000});
-  instance1.save( function(err,doc) {
-  if(err) return console.error(err);
-  console.log("First object saved")
-  });
-  instance2.save( function(err,doc) {
-    if(err) return console.error(err);
-    console.log("Second object saved")
+  instance1.save().then(doc=>{
+    console.log("First object saved")}
+    ).catch(err=>{
+    console.error(err)
     });
-  instance3.save( function(err,doc) {
-    if(err) return console.error(err);
-    console.log("Third object saved")
-    });
+    instance2.save().then(doc=>{
+      console.log("Second object saved")}
+      ).catch(err=>{
+      console.error(err)
+      });
+      instance3.save().then(doc=>{
+        console.log("Third object saved")}
+        ).catch(err=>{
+        console.error(err)
+        });
  }
  let reseed = true;
  if (reseed) { recreateDB();}
 
 // view engine setup
-require('dotenv').config();
-const connectionString =
-process.env.MONGO_CON
-mongoose = require('mongoose');
-mongoose.connect(connectionString);
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -70,6 +75,7 @@ app.use('/users', usersRouter);
 app.use('/squirrel', squirrelRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
