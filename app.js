@@ -10,6 +10,7 @@ process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString);
 
+//Get the default connection
 var db = mongoose.connection;
 //Bind connection to error event
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -17,11 +18,11 @@ db.once("open", function(){
 console.log("Connection to DB succeeded")});
 
 var indexRouter = require('./routes/index');
-var resourceRouter = require('./routes/resource');
 var usersRouter = require('./routes/users');
 var squirrelRouter = require('./routes/squirrel');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
+var resourceRouter = require('./routes/resource');
 var squirrel = require("./models/squirrel");
 
 var app = express();
