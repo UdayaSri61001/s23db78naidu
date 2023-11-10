@@ -10,10 +10,7 @@ exports.squirrel_list = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    };
-// for a specific squirrel.
-exports.squirrel_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: squirrel detail: ' + req.params.id);
-};
+
 // Handle squirrel create on POST.
 exports.squirrel_create_post = function(req, res) {
  res.send('NOT IMPLEMENTED: squirrel create POST');
@@ -55,4 +52,15 @@ exports.squirrel_view_all_Page = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    }
-  
+
+// for a specific squirrel.
+exports.squirrel_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await squirrel.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
