@@ -18,3 +18,5 @@ router.get('/squirrels/:id', squirrel_controller.squirrel_detail);
 // GET request for list of all squirrel items.
 router.get('/squirrels', squirrel_controller.squirrel_list);
 module.exports = router;
+
+

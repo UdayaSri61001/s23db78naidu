@@ -2,18 +2,18 @@ var squirrel = require('../models/squirrel');
 // List of all squirrels
 exports.squirrel_list = async function(req, res) {
     try{
-    thesquirrels = await squirrel.find();
-    res.send(thesquirrels);
-    }
-    catch(err){
-    res.status(500);
-    res.send(`{"error": ${err}}`);
-    }
-   };
+        thesquirrels = await squirrel.find();
+        res.send(thesquirrels);
+        }
+        catch(err){
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+        }
+};
 
 // Handle squirrel create on POST.
 exports.squirrel_create_post = function(req, res) {
- res.send('NOT IMPLEMENTED: squirrel create POST');
+res.send('NOT IMPLEMENTED: cat create POST');
 };
 // Handle squirrel delete form on DELETE.
 exports.squirrel_delete = function(req, res) {
@@ -36,10 +36,6 @@ exports.squirrel_view_all_Page = async function(req, res) {
    exports.squirrel_create_post = async function(req, res) {
     console.log(req.body)
     let document = new squirrel();
-    // We are looking for a body, since POST does not have query parameters.
-    // Even though bodies can be in many different formats, we will be picky
-    // and require that it be a json object
-    // {"squirrel_type":"goat", "cost":12, "size":"large"}
     document.squirrel_color = req.body.squirrel_color;
     document.squirrel_breed = req.body.squirrel_breed;
     document.squirrel_price = req.body.squirrel_price;
@@ -53,14 +49,15 @@ exports.squirrel_view_all_Page = async function(req, res) {
     }
    }
 
-// for a specific squirrel.
+//for a specific squirrel.
 exports.squirrel_detail = async function(req, res) {
-    console.log("detail" + req.params.id)
-    try {
-    result = await squirrel.findById( req.params.id)
-    res.send(result)
-    } catch (error) {
-    res.status(500)
-    res.send(`{"error": document for id ${req.params.id} not found`);
-    }
-    };
+   console.log("detail" + req.params.id)
+   try {
+   result = await squirrel.findById( req.params.id)
+   res.send(result)
+   } catch (error) {
+   res.status(500)
+   res.send(`{"error": document for id ${req.params.id} not found`);
+   }
+   };
+   
