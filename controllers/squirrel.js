@@ -19,10 +19,7 @@ res.send('NOT IMPLEMENTED: cat create POST');
 exports.squirrel_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: squirrel delete DELETE ' + req.params.id);
 };
-// Handle squirrel update form on PUT.
-exports.squirrel_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: squirrel update PUT' + req.params.id);
-};
+
 exports.squirrel_view_all_Page = async function(req, res) {
     try{
     thesquirrels = await squirrel.find();
@@ -60,4 +57,26 @@ exports.squirrel_detail = async function(req, res) {
    res.send(`{"error": document for id ${req.params.id} not found`);
    }
    };
+   
+// Handle squirrel update form on PUT.
+   exports.squirrel_update_put = async function(req, res) {
+   console.log(`update on id ${req.params.id} with body
+   ${JSON.stringify(req.body)}`)
+   try {
+   let toUpdate = await squirrel.findById( req.params.id)
+   // Do updates of properties
+   if(req.body.squirrel_color)
+   toUpdate.squirrel_color = req.body.squirrel_color;
+   if(req.body.breed) toUpdate.cost = req.body.breed;
+   if(req.body.price) toUpdate.size = req.body.price;
+   let result = await toUpdate.save();
+   console.log("Sucess " + result)
+   res.send(result)
+   } catch (err) {
+   res.status(500)
+   res.send(`{"error": ${err}: Update for id ${req.params.id}
+   failed`);
+   }
+   };
+   
    
