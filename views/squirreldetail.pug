@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+
+  - let Squirrelid = toShow._id
+  - let SquirrelColor = toShow.squirrel_color
+  - let SquirrelBreed = toShow.squirrel_breed
+  - let SquirrelPrice = toShow.squirrel_price
+
+  div
+    div.row
+      div(class='squirrelAttr mr-3') Squirrel id is:
+      div #{Squirrelid}
+
+    div.row
+      div(class='squirrelAttr mr-3') Squirrel color is:
+      div #{SquirrelColor}
+
+    div.row
+      div(class='squirrelAttr mr-3') Squirrel breed is:
+      div #{SquirrelBreed}
+
+    div.row
+      div(class='squirrelAttr mr-3') Squirrel price is:
+      div #{SquirrelPrice}
+

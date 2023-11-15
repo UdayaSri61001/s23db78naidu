@@ -78,7 +78,7 @@ exports.squirrel_detail = async function(req, res) {
    failed`);
    }
    };
-   // Handle Costume delete on DELETE.
+   // Handle squirrel delete on DELETE.
 exports.squirrel_delete = async function(req, res) {
    console.log("delete " + req.params.id)
    try {
@@ -91,4 +91,30 @@ exports.squirrel_delete = async function(req, res) {
    }
    };
    
-   
+   // Handle a show one view with id specified by query
+exports.squirrel_view_one_Page = async function(req, res) {
+   console.log("single view for id " + req.query.id)
+   try{
+   result = await squirrel.findById( req.query.id)
+   res.render('squirreldetail',
+  { title: 'Squirrel Detail', toShow: result });
+   }
+   catch(err){
+   res.status(500)
+   res.send(`{'error': '${err}'}`);
+   }
+  };
+
+  / Handle building the view for creating a squirrel.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.squirrel_create_Page = function(req, res) {
+console.log("create view")
+try{
+res.render('squirrelcreate', { title: 'squirrel Create'});
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
