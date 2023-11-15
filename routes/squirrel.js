@@ -11,5 +11,7 @@ var router = express.Router();
 router.get('/', squirrel_controlers.squirrel_view_all_Page );
 module.exports = router;
 
-/* GET detail costume page */
+/* GET detail squirrel page */
 router.get('/detail', squirrel_controlers.squirrel_view_one_Page);
+/* GET create squirrel page */
+router.get('/create', squirrel_controlers.squirrel_create_Page);
