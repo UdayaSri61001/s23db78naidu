@@ -105,16 +105,41 @@ exports.squirrel_view_one_Page = async function(req, res) {
    }
   };
 
-  / Handle building the view for creating a squirrel.
+// Handle building the view for creating a squirrel.
 // No body, no in path parameter, no query.
 // Does not need to be async
 exports.squirrel_create_Page = function(req, res) {
-console.log("create view")
-try{
-res.render('squirrelcreate', { title: 'squirrel Create'});
-}
-catch(err){
-res.status(500)
-res.send(`{'error': '${err}'}`);
-}
-};
+   console.log("create view")
+   try{
+   res.render('squirrelcreate', { title: 'squirrel Create'});
+   }
+   catch(err){
+   res.status(500)
+   res.send(`{'error': '${err}'}`);
+   }
+   };
+   // Handle building the view for updating a squirrel.
+   // query provides the id
+   exports.squirrel_update_Page = async function(req, res) {
+   console.log("update view for item "+req.query.id)
+   try{
+   let result = await squirrel.findById(req.query.id)
+   res.render('squirrelupdate', { title: 'squirrel Update', toShow: result });
+   }
+   catch(err){
+   res.status(500)
+   res.send(`{'error': '${err}'}`);
+   }
+   };
+   exports.squirrel_delete_Page = async function(req, res) {
+      console.log("Delete view for id " + req.query.id)
+      try{
+      result = await squirrel.findById(req.query.id)
+      res.render('squirreldelete', { title: 'squirrel Delete', toShow:
+      result });
+      }
+      catch(err){
+      res.status(500)
+      res.send(`{'error': '${err}'}`);
+      }
+      };
