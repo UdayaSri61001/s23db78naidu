@@ -1,20 +1,45 @@
 extends layout
-block content
-    div(class="container-fluid")
-        h1= title
-         //- - let items = ['dog_type','quantity','cost']
-        - let items = results;
-        - let o;
-        div(class="row")
-            each form,item in results
-                div(class = "col-sm-2 bg-danger" onclick=`buy(${item})`) #{form.squirrel_color}              
-                div(class = "col-sm-2 bg-danger" onclick=`buy(${item})`) #{form.squirrel_breed}                
-                div(class = "col-sm-2 bg-danger" onclick=`buy(${item})`) #{form.squirrel_price}
-                hr
 
-    
-    script.
-        function buy(itemNo)
-        {
-            alert(`You purchased Item ${itemNo+1}`)
-        }
+block content
+
+  h1= title
+
+  - let items = results
+
+  div(class="container-fluid")
+
+    div(class="row m-1")
+
+      each item in results
+
+        - let destination1 = `dispatch("/items/update?id=${item._id}")`
+
+        - let destination2 = `dispatch("/items/create")`
+
+        - let destination3 = `dispatch("/items/detail?id=${item._id}")`
+
+        - let destination4 = `dispatch("/items/delete?id=${item._id}")`
+
+        div(class="row-sm-2 m-1") 
+
+          | color : #{item.squirrel_color}, 
+
+          | breed : #{item.squirrel_breed}, 
+
+          | price : #{item.squirrel_price}
+
+          //- button.btn(class="btn-primary ml-1", onclick= destination2) Create 
+
+          button.btn(class="btn-primary ml-1", onclick= destination1) Update 
+
+          //- button.btn(class="btn-primary ml-1", onclick= destination3) Detail
+
+          //- button.btn(class="btn-primary ml-1", onclick= destination4) Delete
+ 
+  script.
+
+    function dispatch(path) {
+
+      window.location.href = path;
+
+    }
