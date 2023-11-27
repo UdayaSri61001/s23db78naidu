@@ -1,9 +1,7 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose")
 const squirrelSchema = mongoose.Schema({
 squirrel_color: String,
-squirrel_breed: String,
-squirrel_price: Number
-});
-
-module.exports = mongoose.model('squirrel', squirrelSchema);
+squirrel_breed: {type:String,length:15},
+squirrel_price: {type:Number,min:1000,max:100000}
+})
+module.exports = mongoose.model("squirrel",squirrelSchema)
