@@ -1,45 +1,31 @@
 extends layout
 
 block content
-
   h1= title
-
-  - let items = results
-
-  div(class="container-fluid")
-
-    div(class="row m-1")
-
-      each item in results
-
-        - let destination1 = `dispatch("/items/update?id=${item._id}")`
-
-        - let destination2 = `dispatch("/items/create")`
-
-        - let destination3 = `dispatch("/items/detail?id=${item._id}")`
-
-        - let destination4 = `dispatch("/items/delete?id=${item._id}")`
-
-        div(class="row-sm-2 m-1") 
-
-          | color : #{item.squirrel_color}, 
-
-          | breed : #{item.squirrel_breed}, 
-
-          | price : #{item.squirrel_price}
-
-          //- button.btn(class="btn-primary ml-1", onclick= destination2) Create 
-
-          button.btn(class="btn-primary ml-1", onclick= destination1) Update 
-
-          //- button.btn(class="btn-primary ml-1", onclick= destination3) Detail
-
-          //- button.btn(class="btn-primary ml-1", onclick= destination4) Delete
- 
+  //- - let items = ['squirrel_type','quantity','cost']
+  - let items = results;
+  - let o;
   script.
+    function buy(x){
+      alert('purchased item ' + x)
+   } 
+  div(class='container-fluid')
+    a(class="btn btn-info" href="/squirrel/create") Create
+    div(class='row m-1')
+    div(class="row row-cols-1 row-cols-sm-4 g-6")
+      each item,index in items
+        - let destination = `dispatch(\"/squirrel/update?id=${item._id}\")`
+        - let details = `dispatch(\"/squirrel/detail?id=${item._id}\")` 
+      
+        div(class="squirreld text-black mb-3" class='col' class='squirreld' class='squirreld-body' class='squirreld-text' onclick='buy('+index+')') Item color is #{item.squirrel_color}(Item breed is #{item.squirrel_breed})price is #{item.squirrel_price} 
+          <br><br>
+          span(class="btn btn-secondary", onclick= details) Details
+          <br>
+          a(class="btn btn-danger", href="/squirrel/delete/?id="+item._id) Delete
+          <br>
+          button.btn( class="btn-success ml-1", onclick= destination) Update
 
-    function dispatch(path) {
-
-      window.location.href = path;
-
+  script.
+    function dispatch(path){
+      window.location.href=path
     }
